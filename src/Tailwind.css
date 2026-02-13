@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* dark mode classes */
+html.dark {
+  --bg: #1f2937;
+}
