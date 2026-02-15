@@ -1,103 +1,167 @@
-import { useState } from "react";
-
-// Mock data
-const mockStadiums = [
-  { id: 1, name: "Camp Nou", categories: ["VIP", "Cat 1"] },
-  { id: 2, name: "Anfield", categories: ["VIP", "Standard"] },
-  { id: 3, name: "Allianz Arena", categories: ["VIP", "Premium"] },
-  { id: 4, name: "Parc des Princes", categories: ["VIP", "Cat 1"] },
-  { id: 5, name: "San Siro", categories: ["VIP", "Cat 1"] },
-  { id: 6, name: "Santiago Bernabéu", categories: ["VIP", "Premium"] },
-  { id: 7, name: "Old Trafford", categories: ["VIP", "Cat 1"] },
-  { id: 8, name: "Emirates Stadium", categories: ["Premium", "Standard"] },
-];
-
-const mockLeagues = ["Premier League", "La Liga", "Bundesliga", "Serie A", "Ligue 1"];
-
-const mockTeams = ["Arsenal", "Chelsea", "Barcelona", "Real Madrid", "Bayern Munich", "PSG", "AC Milan", "Inter Milan"];
-
-const mockMatches = [
-  { id: 1, teamA: "FC Barcelona", teamB: "Real Madrid", stadium: "Camp Nou", date: "15/02/2026", ticketPrice: 120, status: "Upcoming" },
-  { id: 2, teamA: "Manchester United", teamB: "Liverpool FC", stadium: "Anfield", date: "16/02/2026", ticketPrice: 95, status: "Upcoming" },
-  { id: 3, teamA: "Bayern Munich", teamB: "Borussia Dortmund", stadium: "Allianz Arena", date: "17/02/2026", ticketPrice: 85, status: "Upcoming" },
-  { id: 4, teamA: "PSG", teamB: "Olympique Marseille", stadium: "Parc des Princes", date: "18/02/2026", ticketPrice: 110, status: "Upcoming" },
-  { id: 5, teamA: "AC Milan", teamB: "Inter Milan", stadium: "San Siro", date: "20/02/2026", ticketPrice: 100, status: "Upcoming" },
-];
-
-// KPI Card Component
-function KPICard({ title, value, subtitle }) {
-  return (
-    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/20 hover:border-white/40 transition cursor-default">
-      <p className="text-xs uppercase text-gray-300 mb-1">{title}</p>
-      <h3 className="text-3xl font-bold text-white">{value}</h3>
-      <span className="text-sm text-gray-400 mt-1 inline-block">{subtitle}</span>
-    </div>
-  );
-}
-
-// Main Dashboard
 export default function Dashboard() {
-  const [darkMode, setDarkMode] = useState(true);
+  const stats = [
+    { title: "Total Stadiums", value: 8, badge: "+16 Active", icon: "🏟️" },
+    { title: "Total Leagues", value: 5, badge: "+15 Registered", icon: "🏆" },
+    { title: "Active Matches", value: 8, badge: "+4 Ongoing", icon: "🎟️" },
+    { title: "Active Teams", value: 12, badge: "+4 Registered", icon: "👥" },
+  ];
+  const StadiumIcon = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeWidth="1.5" d="M3 21h18M4 21V5a2 2 0 012-2h12a2 2 0 012 2v16M9 21V9h6v12" />
+  </svg>
+);
+
+const LeagueIcon = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeWidth="1.5" d="M8 21h8M12 3v12m0 0l4-4m-4 4l-4-4" />
+  </svg>
+);
+
+const MatchIcon = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <rect x="3" y="6" width="18" height="12" rx="2" strokeWidth="1.5" />
+    <path strokeWidth="1.5" d="M7 10h.01M7 14h.01M17 10h.01M17 14h.01" />
+  </svg>
+);
+
+const TeamIcon = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <circle cx="9" cy="7" r="3" strokeWidth="1.5" />
+    <circle cx="17" cy="7" r="3" strokeWidth="1.5" />
+    <path strokeWidth="1.5" d="M2 21c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+    <path strokeWidth="1.5" d="M14 21c0-2.2 1.8-4 4-4s4 1.8 4 4" />
+  </svg>
+);
+
+
+  const matches = [
+    {
+      match: "FC Barcelona vs Real Madrid",
+      stadium: "Camp Nou",
+      date: "15/02/2026",
+      price: "$120",
+      status: "Upcoming",
+    },
+    {
+      match: "Manchester United vs Liverpool FC",
+      stadium: "Anfield",
+      date: "16/02/2026",
+      price: "$95",
+      status: "Upcoming",
+    },
+    {
+      match: "Bayern Munich vs Borussia Dortmund",
+      stadium: "Allianz Arena",
+      date: "17/02/2026",
+      price: "$85",
+      status: "Upcoming",
+    },
+    {
+      match: "Paris Saint-Germain vs Olympique Marseille",
+      stadium: "Parc des Princes",
+      date: "18/02/2026",
+      price: "$110",
+      status: "Upcoming",
+    },
+    {
+      match: "AC Milan vs Inter Milan",
+      stadium: "San Siro",
+      date: "20/02/2026",
+      price: "$100",
+      status: "Upcoming",
+    },
+  ];
 
   return (
-    <div className={`${darkMode ? "bg-[#0f172a] text-white" : "bg-gray-50 text-gray-900"} min-h-screen p-8 font-sans`}>
+    <div className="p-8 bg-gray-50 min-h-screen space-y-8">
       {/* Header */}
-      <header className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-semibold mb-1">Dashboard</h1>
-          <p className="text-gray-400 max-w-sm">Welcome back, here's what's happening</p>
-        </div>
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          {darkMode ? "Light Mode" : "Dark Mode"}
-        </button>
-      </header>
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+        <p className="text-sm text-gray-500">
+          Welcome back, here's what's happening
+        </p>
+      </div>
 
-      {/* KPI Cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <KPICard title="Total Stadiums" value={mockStadiums.length} subtitle={`${mockStadiums.length * 2} Active`} />
-        <KPICard title="Total Leagues" value={mockLeagues.length} subtitle={`${mockLeagues.length * 3} Registered`} />
-        <KPICard title="Active Matches" value={mockMatches.length} subtitle={`${Math.floor(mockMatches.length / 2)} Ongoing`} />
-        <KPICard title="Active Teams" value={mockTeams.length} subtitle={`${Math.floor(mockTeams.length / 3)} Registered`} />
-      </section>
+      {/* Stats Cards */}
+<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+  {stats.map((s, i) => (
+    <div
+      key={i}
+      className="
+        rounded-2xl p-6
+        bg-gradient-to-br from-white to-sky-50
+        border border-sky-200
+        shadow-sm
+      "
+    >
+      {/* Icon */}
+      <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-200 mb-4 text-gray-700">
+        {s.icon}
+      </div>
 
-      {/* Recent Matches Table */}
-      <section className="bg-white/10 backdrop-blur-md rounded-xl shadow-lg border border-white/20 overflow-hidden">
-        <div className="px-6 py-4 border-b border-white/20">
-          <h2 className="text-xl font-semibold text-white">Recent Matches</h2>
+      {/* Title */}
+      <p className="text-xs uppercase tracking-wide text-gray-500 mb-1">
+        {s.title}
+      </p>
+
+      {/* Value */}
+      <p className="text-3xl font-bold text-gray-900 mb-3">
+        {s.value}
+      </p>
+
+      {/* Badge */}
+      <span className="inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-gray-200 text-gray-700">
+        ↑ {s.badge}
+      </span>
+    </div>
+  ))}
+</div>
+
+
+      {/* Recent Matches */}
+      <div className="bg-white rounded-2xl shadow-sm border">
+        <div className="px-6 py-4 border-b">
+          <h2 className="font-semibold text-gray-900">Recent Matches</h2>
         </div>
-        <table className="w-full text-left text-sm text-gray-300">
-          <thead className="bg-white/20">
-            <tr>
-              <th className="px-6 py-3 uppercase font-semibold tracking-wide">Match</th>
-              <th className="px-6 py-3 uppercase font-semibold tracking-wide">Stadium</th>
-              <th className="px-6 py-3 uppercase font-semibold tracking-wide">Date</th>
-              <th className="px-6 py-3 uppercase font-semibold tracking-wide">Price</th>
-              <th className="px-6 py-3 uppercase font-semibold tracking-wide">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockMatches.map(({ id, teamA, teamB, stadium, date, ticketPrice, status }) => (
-              <tr
-                key={id}
-                className="border-t border-white/10 hover:bg-white/20 transition cursor-pointer"
-              >
-                <td className="px-6 py-4">{teamA} vs {teamB}</td>
-                <td className="px-6 py-4">{stadium}</td>
-                <td className="px-6 py-4">{date}</td>
-                <td className="px-6 py-4">${ticketPrice}</td>
-                <td className="px-6 py-4">
-                  <span className="bg-gray-700 bg-opacity-50 px-3 py-1 rounded-full text-xs font-semibold text-gray-200">
-                    {status}
-                  </span>
-                </td>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
+              <tr>
+                <th className="px-6 py-3 text-left">Match</th>
+                <th className="px-6 py-3 text-left">Stadium</th>
+                <th className="px-6 py-3 text-left">Date</th>
+                <th className="px-6 py-3 text-left">Price</th>
+                <th className="px-6 py-3 text-left">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+            </thead>
+
+            <tbody className="divide-y">
+              {matches.map((m, i) => (
+                <tr key={i} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {m.match}
+                  </td>
+                  <td className="px-6 py-4 text-gray-600">
+                    {m.stadium}
+                  </td>
+                  <td className="px-6 py-4 text-gray-600">
+                    {m.date}
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900">
+                    {m.price}
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
+                      {m.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
